@@ -1,0 +1,403 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&family=Lato:wght@400;700&family=Outfit:wght@400;700&family=Poppins:ital,wght@0,400;0,600;0,700;1,400&family=Roboto:wght@400;700&display=swap');
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.App {
+  text-align: center;
+  font-family: 'Josefin Sans';
+}
+
+:root {
+  /* Primary */
+
+--BrightBlue: hsl(220, 98%, 61%);
+--greenLight: hsl(192, 100%, 67%);
+--purpleLight: hsl(280, 87%, 65%);
+--CheckBackground: linear-gradient(var(--greenLight), var(--purpleLight));
+--Darkbackground: #181824;
+/* Neutral */
+
+ /* Light Theme */
+
+--VeryLightGray: hsl(0, 0%, 98%);
+--VeryLightGrayishBlue: hsl(236, 33%, 92%);
+--LightGrayishBlue: hsl(233, 11%, 84%);
+--DarkGrayishBlue: hsl(236, 9%, 61%);
+--VeryDarkGrayishBlue: hsl(235, 19%, 35%);
+/* Dark Theme */
+
+--VeryDarkBlue: hsl(235, 21%, 11%);
+--VeryDarkDesaturatedBlue: hsl(235, 24%, 19%);
+--LightGrayishBlue: hsl(234, 39%, 85%);
+--LightGrayishBlue: hsl(236, 33%, 92%); /*(hover)*/
+--DarkGrayishBlue: hsl(234, 11%, 52%);
+--VeryDarkGrayishBlue: hsl(233, 14%, 35%);
+--VeryDarkGrayishBlue: hsl(237, 14%, 26%);
+
+--Family: [Josefin Sans](https://fonts.google.com/specimen/Josefin+Sans)
+- Weights: 400, 700;
+}
+
+.container {
+  background-color: var(--Darkbackground);
+}
+
+.container_light {
+  background-color: var(--LightGrayishBlue);
+}
+
+.container,
+.container_light {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
+.header_background {
+  background-image: url(/src/images/bg-desktop-dark.jpg);
+}
+
+.header_background_light {
+  background-image: url(/src/images/bg-desktop-light.jpg);
+}
+
+.header_background,
+.header_background_light {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 16rem;
+  margin: auto;
+}
+
+.todo_content {
+  max-width: 600px;
+  width: auto;
+  margin: auto;
+  position: relative;
+  top: -12rem;
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.title h1 {
+  letter-spacing: 1rem;
+  color: var(--VeryLightGray)
+}
+.title button {
+  background-color: transparent;
+  border: none;
+}
+
+.title button:hover {
+  cursor: pointer;
+}
+
+.btn_theme_sun {
+  background-image: url(/src/images/icon-sun.svg);
+}
+
+.btn_theme_dark {
+  background-image: url(/src/images/icon-moon.svg);
+}
+
+.btn_theme_sun,
+.btn_theme_dark {
+  width: 25px;
+  height: 25px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.add_list,
+.add_list_light {
+  padding: .8rem;
+  border-radius: .3rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+.hiddenInput,
+.fistReload {
+  display: none;
+}
+
+.add_list {
+  background-color: var(--VeryDarkDesaturatedBlue);
+}
+.add_list_light {
+  background-color: var(--VeryLightGray);
+}
+
+.add_list:hover {
+  border: .1rem solid var(--BrightBlue);
+  padding: .7rem;
+}
+.main_light {
+  color: var(--VeryDarkGrayishBlue);
+}
+
+.main {
+  color: #fff;
+}
+
+.main,
+.main_light {
+  height: auto;
+}
+
+
+.flex_list ul input[type='checkbox'],
+.flex_list_light ul input[type='checkbox'],
+.add_list input[type='checkbox'],
+.add_list_light input[type='checkbox'] {
+  display: none;
+}
+.flex_list ul input[type='checkbox']:hover + label:before,
+.flex_list_light ul input[type='checkbox']:hover + label:before
+.add_list input[type='checkbox']:hover + label:before,
+.add_list_light input[type='checkbox']:hover + label:before {
+  cursor: pointer;
+}
+
+.flex_list ul input[type='checkbox'] + label:before,
+.flex_list_light ul input[type='checkbox'] + label:before,
+.add_list input[type='checkbox'] + label:before,
+.add_list_light input[type='checkbox'] + label:before {
+  content: '';
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  border: 1px solid  var(--DarkGrayishBlue);
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.flex_list ul input[type='checkbox']:hover + label:before,
+.flex_list_light ul input[type='checkbox']:hover + label:before,
+.add_list input[type='checkbox']:hover + label:before,
+.add_list_light input[type='checkbox']:hover + label:before {
+  border: 1px solid  var(--purpleLight);
+}
+
+.flex_list ul input[type='checkbox']:checked + label:before,
+.flex_list_light ul input[type='checkbox']:checked + label:before,
+.add_list input[type='checkbox']:checked + label:before,
+.add_list_light input[type='checkbox']:checked + label:before {
+  font-size: 12px;
+  font-family: FontAwesome;
+  content: '\f00c';
+  color: var(--VeryLightGray);
+  background: var(--CheckBackground);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.add_list input[type='checkbox']:checked + label:before i,
+.add_list_light input[type='checkbox']:checked + label:before i {
+  width: 100%;
+  height: 100%;
+}
+
+.add_list input[type='text'] {
+  color: var(--LightGrayishBlue);
+}
+
+.add_list_light input[type='text'] {
+  color: var(--VeryDarkDesaturatedBlue);
+}
+
+.add_list input[type='text'],
+.add_list_light input[type='text'] {
+  background-color: transparent;
+  border: none;
+  padding: .5rem ;
+  font-size: 18px;
+  width: 100%;
+}
+
+.add_list input[type='text']:focus,
+.add_list_light input[type='text']:focus {
+  outline: none;
+}
+
+.flex_list ul {
+  background-color: var(--VeryDarkDesaturatedBlue);
+}
+
+.flex_list_light ul {
+  background-color: var(--VeryLightGray);
+}
+
+.flex_list ul,
+.flex_list_light ul {
+  border-radius: .3rem;
+}
+
+.flex_list ul li {
+  border-bottom: .050rem solid var(--DarkGrayishBlue);
+}
+
+.flex_list_light ul li {
+  border-bottom: .050rem solid var(--LightGrayishBlue);
+}
+
+.sub_line {
+  text-decoration: line-through;
+}
+
+.flex_list ul li,
+.flex_list_light ul li {
+  list-style: none;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.flex_list ul li p,
+.flex_list_light ul li p {
+  margin-left: 1rem;
+}
+
+#removeItem {
+  background-color: transparent;
+  margin-left: auto;
+  margin-right: 0;
+  border: none;
+}
+.flex_list ul li i,
+.flex_list_light ul li i {
+  margin-left: auto;
+  margin-right: 0;
+  color:hsl(234, 11%, 52%);
+  font-size: 18px;
+  display: none;
+}
+
+.flex_list ul li:hover i,
+.flex_list_light ul li:hover i {
+  display: flex;
+}
+
+.flex_list ul li i:hover,
+.flex_list_light ul li i:hover {
+  cursor: pointer;
+}
+
+.footer {
+  padding: 1rem;
+  background: var(--VeryDarkDesaturatedBlue);
+  border-radius: 0 0 .5rem .5rem;
+}
+
+.footer_light {
+  padding: 1rem;
+  background: var(--VeryLightGray);
+  border-radius: 0 0 .5rem .5rem;
+}
+
+.filter_type_list_out {
+  display: none;
+  align-items: center;
+  justify-content: space-around;
+  margin: auto;
+  width: 100%;
+  margin: 2rem 0;
+}
+
+.footer,
+.footer_light,
+.filter_type_list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.total_items {
+  color: var(--VeryLightGray);
+}
+
+.total_items_light {
+  color: var(--VeryDarkGrayishBlue)
+}
+
+.input_type,
+.input_type_light,
+.total_items_light {
+  margin: auto .5rem;
+}
+
+.input_type button,
+.clear_completed button {
+  color: var(--VeryLightGray);
+}
+
+.input_type_light button,
+.clear_completed_light button {
+  color: var(--VeryDarkDesaturatedBlue)
+}
+
+.input_type_light button,
+.clear_completed_light button,
+.input_type button,
+.clear_completed button {
+  border: none;
+  background-color: transparent;
+}
+
+.input_type button:focus,
+.input_type_light button:focus {
+  color: var(--BrightBlue); 
+}
+
+.input_type button:hover,
+.input_type_light button:hover,
+.clear_completed button:hover,
+.clear_completed_light button:hover {
+  cursor: pointer;
+}
+
+.attribution {
+  padding: .5rem 0;
+  background-color: var(--Darkbackground);
+  color: var(--VeryLightGray);
+}
+
+.attribution b a {
+  color: unset;
+}
+
+@media (max-width: 1440px) {
+  .main, .main_light {
+    min-height: 71vh;
+  }
+}
+
+@media (max-width: 600px) {
+  .main,
+  .main_light {
+    padding: 1rem;
+  }
+
+  .filter_type_list {
+    display: none;
+  }
+
+  .filter_type_list_out {
+    display: flex;
+  }
+}
+
