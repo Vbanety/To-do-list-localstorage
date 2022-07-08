@@ -309,7 +309,8 @@
   border-radius: 0 0 .5rem .5rem;
 }
 
-.filter_type_list_out {
+.filter_type_list_out,
+.filter_type_list_out_dark {
   display: none;
   align-items: center;
   justify-content: space-between;
@@ -437,8 +438,15 @@
   }
 
   .filter_type_list_out {
-    display: flex;
+    background-color: var(--VeryDarkDesaturatedBlue);
+  }
+  
+  .filter_type_list_out_dark {
     background-color: var(--VeryLightGray);
+  }
+  .filter_type_list_out,
+  .filter_type_list_out_dark {
+    display: flex;
     border-radius: .5rem;
     padding-top: .5rem;
   }

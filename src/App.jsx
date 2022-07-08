@@ -273,7 +273,7 @@ function App() {
               </div>
             </div>
 
-            <div className="filter_type_list_out">
+            <div className={theme ? 'filter_type_list_out' : 'filter_type_list_out_dark'}>
                   <div className={theme ? 'input_type' : 'input_type_light'}>
                     <input id="all" onClick={() => handleAllTask()} type="radio" name="filters" />
                     <label htmlFor="all"></label>
