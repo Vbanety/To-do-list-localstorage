@@ -312,10 +312,11 @@
 .filter_type_list_out {
   display: none;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   margin: auto;
   width: 100%;
   margin: 2rem 0;
+  padding: 0 4rem;
 }
 
 .footer,
@@ -331,7 +332,7 @@
 }
 
 .total_items_light {
-  color: var(--VeryDarkGrayishBlue)
+  /* color: var(--VeryDarkGrayishBlue) */
 }
 
 .input_type,
@@ -340,8 +341,47 @@
   margin: auto .5rem;
 }
 
+.input_type input[type='radio'],
+.input_type_light input[type='radio'] {
+  display: none;
+}
+
+.input_type input[type='radio'] + label:before,
+.input_type_light input[type='radio'] + label:before {
+  content: '';
+  width: 100%;
+  height: 1rem;
+  border: none;
+  display: flex;
+  position: relative;
+  top: 8px;
+  vertical-align: middle;
+  z-index: 9999;
+}
+
+.input_type input[type='radio']:hover + label:before,
+.input_type_light input[type='radio']:hover + label:before{
+  cursor: pointer;
+}
+.input_type  button,
+.input_type_light  button {
+  position: relative;
+  top: -10px;
+}
+
+
+.input_type input[type='radio']:checked ~ button,
+.input_type_light input[type='radio']:checked ~ button{
+  color: var(--BrightBlue) !important; 
+}
+
 .input_type button,
 .clear_completed button {
+  color: var(--VeryLightGray);
+}
+
+.input_type button:hover,
+.clear_completed button:hover {
   color: var(--VeryLightGray);
 }
 
@@ -398,6 +438,9 @@
 
   .filter_type_list_out {
     display: flex;
+    background-color: var(--VeryLightGray);
+    border-radius: .5rem;
+    padding-top: .5rem;
   }
 }
 

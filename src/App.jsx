@@ -4,26 +4,24 @@ import './App.css'
 
 function App() {
 
-  
+
   const [theme, setTheme] = useState(false)
   const [inputValue, setInputValue] = useState('')
   const [classFirsElement, setClassFirsElement] = useState(false)
   const [todos, setTodos] = useState([])
-  const [hidden, setHidden] = useState(false)
+  const [countInput, setCountInput] = useState([])
 
-  const handleTheme = () => {
-    setTheme(!theme)
-  }
+  const handleTheme = () => { setTheme(!theme) }
 
-  
   useEffect(() => {
     let focus = document.getElementById('setText')
     focus.focus()
+
     
   }, [])
 
   const handleKeyPress = (e) => {
-    
+
     if (e.key === 'Enter') {
       var array = JSON.parse(localStorage.getItem("data"));
       if (array == null) array = [];
@@ -40,7 +38,7 @@ function App() {
         "id": uuidv4(),
         "key": keys,
         "value": inputValue,
-        "status": true
+        "status": false
       };
 
       // SET ON LOCALSTORAGE
@@ -55,12 +53,12 @@ function App() {
       const parseData = JSON.parse(data)
 
       setTodos(parseData)
-      
+
       setInputValue(e.currentTarget.value = '')
       let elementEmpty = document.getElementById('fistReload')
       // elementEmpty.style.display = 'none'
       setClassFirsElement(!false)
-      
+
     }
   }
 
@@ -69,9 +67,9 @@ function App() {
     let array = localStorage.getItem("data");
     let parseArray = JSON.parse(array)
     let getItem = parseArray.findIndex(item => item.id == id)
-    
+
     parseArray.splice(getItem, 1)
-    
+
     // UPDATE QUANTITY OF INDEX INSIDE ARRAY ON LOCALSTORAGE AND NORMAL ARRAY 
     localStorage.setItem("data", JSON.stringify(parseArray));
     setTodos(parseArray)
@@ -90,8 +88,13 @@ function App() {
     let x = todos.filter(e => e.key == idUpdate)
     const { status } = x[0]
 
-    status == true ? x[0].status = false : x[0].status = false
-
+    var res
+    if (status == true) {
+      res = x[0].status = false
+    } else if (status == false) {
+      res = x[0].status = true
+    }
+    
     localStorage.setItem("data", JSON.stringify(todos))
 
     let dd = localStorage.getItem('data')
@@ -99,69 +102,90 @@ function App() {
     let xx = JSON.parse(dd)
 
     setTodos(xx)
-    console.log(todos)
+    setCountInput(todos.filter(e => e.status == false).length)
   }
 
   const handleClearAllList = () => {
     localStorage.removeItem("data")
     localStorage.removeItem("obj")
     setTodos([])
+    setCountInput(todos.filter(e => e.status == 'x').length)
   }
 
   const handleFilterByActive = (e) => {
 
-    var active = document.getElementById('active').checked
+    if(todos.length !== 0 && todos !== []) {
 
-    var getAllInputs = document.getElementsByName('checkbox')
-    
-
-    if(active == true) {
-      let filtered = todos.filter(e => e.status === true)
-      
-      localStorage.setItem('dataActive', JSON.stringify(filtered))
-      
-      let getActive = localStorage.getItem('dataActive')
-
-      let activeParsed = JSON.parse(getActive)
-
-      setTodos(activeParsed)
-      let dd = document.querySelectorAll('#getLabel')
-      dd.forEach(e => {
-        e.style.background = 'transparent'
+      var active = document.getElementById('active').checked
+  
+      let data = localStorage.getItem('data')
+  
+      let activeData = JSON.parse(data)
+  
+      let inputs = document.getElementsByName('checkbox')
+  
+      inputs.forEach(e => {
+        let status = e.checked
+  
+        let el = e.parentElement
+        
+        if(status == true) el.style.display = 'none' 
+        if(status == false) el.style.display = 'flex'
+  
       })
-    } else {
-      setTodos(todos)
+  
+      active == true ? setTodos(activeData) : setTodos(todos)
     }
-    
-    
   }
 
   const handleFilterByCompleted = () => {
-    var completed = document.getElementById('completed').checked
+    if(todos.length !== 0 && todos !== []) {
 
-    if(completed == true) {
-      let completedData = todos.filter(e => e.status == false)
-      localStorage.setItem('dataCompleted', JSON.stringify(completedData))
-
-      let getCompleted = localStorage.getItem('dataCompleted')
-
-      let completedParsed = JSON.parse(getCompleted)
-      // console.log(completedParsed)
-      setTodos(completedParsed)
-    } else {
+      var completed = document.getElementById('completed').checked
+  
+      let data = localStorage.getItem('data')
+  
+      let completedData = JSON.parse(data)
+  
+      let inputs = document.getElementsByName('checkbox')
+  
+      inputs.forEach(e => {
+        let status = e.checked
+  
+        let el = e.parentElement
+        
+        if(status == true) el.style.display = 'flex' 
+        if(status == false) el.style.display = 'none'
+  
+      })
       
+      completed == true ? setTodos(completedData) : setTodos(todos)
     }
   }
 
   const handleAllTask = () => {
-    var all = document.getElementById('all').checked
-    
+
+    if(todos.length !== 0 && todos !== []) {
+      var all = document.getElementById('all').checked
+
     let data = localStorage.getItem('data')
 
     let parseData = JSON.parse(data)
 
-    all == true ? setTodos(parseData) : undefined
+    let inputs = document.getElementsByName('checkbox')
 
+    inputs.forEach(e => {
+      let status = e.checked
+
+      let el = e.parentElement
+      
+      if(status == true) el.style.display = 'flex' 
+      if(status == false) el.style.display = 'flex'
+
+    })
+
+    all == true ? setTodos(parseData) : setTodos(todos)
+    }
   }
 
   return (
@@ -184,78 +208,88 @@ function App() {
                 <input id="checkbox_add" type="checkbox" />
                 <label htmlFor="checkbox_add">
                 </label>
-                <input id="setText" onKeyPress={handleKeyPress} type="text" onChange={(e) => setInputValue(e.currentTarget.value)} placeholder='Type your todo and press enter' autoFocus/>
+                <input id="setText" onKeyPress={handleKeyPress} type="text" onChange={(e) => setInputValue(e.currentTarget.value)} placeholder='Type your todo and press enter' autoFocus />
               </div>
 
               <ul>
 
-                { todos.length == 0 
-                ?  
-                <li key={99999999} className={ classFirsElement ?  'fistReload' : undefined}>
-                  <p>Empty list</p>
-                </li>
-                :
-                todos.map((item, i) => {
-                  return (
-                    <>
-                      <li key={i}>
-                        <input 
-                          id={item.key} type="checkbox" 
-                          value={item.id} onClick={(e) => handleSublimeText(e)}
-                          name="checkbox"
-                        />
-                        <label id='getLabel' htmlFor={item.key}>
-                        </label>
-                        <p>{item.value}</p>
-                        <button 
-                          id="removeItem" 
-                          onClick={(e) => handleRemoveItem(e)} 
-                          defaultValue={item.id}
+                {todos.length == 0
+                  ?
+                  <li key={99999999} className={classFirsElement ? 'fistReload' : undefined}>
+                    <p>Empty list</p>
+                  </li>
+                  :
+                  todos.map((item) => {
+                    return (
+                      <>
+                        <li key={item.key}>
+                          <input
+                            id={item.key} type="checkbox"
+                            value={item.id} onClick={(e) => handleSublimeText(e)}
+                            name="checkbox"
+                            defaultChecked={item.status}
+                          />
+                          <label id='getLabel' htmlFor={item.key}>
+                          </label>
+                          <p id={item.id}>{item.value}</p>
+                          <button
+                            id="removeItem"
+                            onClick={(e) => handleRemoveItem(e)}
+                            defaultValue={item.id}
                           >
-                          <i className="fa-solid fa-xmark"></i>
-                        </button>
-                      </li>
-                    </>
-                  )
-                })
-                
-                
-              }
+                            <i className="fa-solid fa-xmark"></i>
+                          </button>
+                        </li>
+                      </>
+                    )
+                  })
+
+
+                }
 
               </ul>
-                <div className={theme ? 'footer' : 'footer_light'}>
-                  <div className={theme ? 'total_items' : 'total_items_light'}>{todos.length} items left</div>
-                  <div className="filter_type_list">
-                    <div className={theme ? 'input_type' : 'input_type_light'}>
-                    <input onClick={() => handleAllTask()} type="radio" name="filters" id="all"/>
-                      <button>All</button>
-                    </div>
-                    <div className={theme ? 'input_type' : 'input_type_light'}>
-                      <input onClick={(e) => handleFilterByActive(e)} type="radio" name="filters" id="active"/>
-                      <button>Active</button>
-                    </div>
-                    <div className={theme ? 'input_type' : 'input_type_light'}>
-                      <input onClick={() => handleFilterByCompleted()} type="radio" name="filters" id="completed"/>
-                      <button>Completed</button>
-                    </div>
+              <div className={theme ? 'footer' : 'footer_light'}>
+                <div className={theme ? 'total_items' : 'total_items_light'}>{countInput} items left</div>
+                <div className="filter_type_list">
+                  <div className={theme ? 'input_type' : 'input_type_light'}>
+                    <input id="all" onClick={() => handleAllTask()} type="radio" name="filters" />
+                    <label htmlFor="all"></label>
+                    <button id="btnAll">All</button>
                   </div>
-                  <div className={theme ? 'clear_completed' : 'clear_completed_light'}>
-                    <button onClick={() => handleClearAllList()}>Clear Completed</button>
+                  <div className={theme ? 'input_type' : 'input_type_light'}>
+                    <input onClick={(e) => handleFilterByActive(e)} type="radio" name="filters" id="active" />
+                    <label htmlFor="active"></label>
+                    <button id="btnActive">Active</button>
+                  </div>
+                  <div className={theme ? 'input_type' : 'input_type_light'}>
+                    <input onClick={() => handleFilterByCompleted()} type="radio" name="filters" id="completed" />
+                    <label htmlFor="completed"></label>
+                    <button id="btnCompleted">Completed</button>
                   </div>
                 </div>
+                <div className={theme ? 'clear_completed' : 'clear_completed_light'}>
+                  <button onClick={() => handleClearAllList()}>Clear Completed</button>
+                </div>
+              </div>
             </div>
 
             <div className="filter_type_list_out">
-                    <div className={theme ? 'input_type' : 'input_type_light'}>
-                      <button>All</button>
-                    </div>
-                    <div className={theme ? 'input_type' : 'input_type_light'}>
-                      <button>Active</button>
-                    </div>
-                    <div className={theme ? 'input_type' : 'input_type_light'}>
-                      <button>Completed</button>
-                    </div>
+                  <div className={theme ? 'input_type' : 'input_type_light'}>
+                    <input id="all" onClick={() => handleAllTask()} type="radio" name="filters" />
+                    <label htmlFor="all"></label>
+                    <button id="btnAll">All</button>
                   </div>
+                  <div className={theme ? 'input_type' : 'input_type_light'}>
+                    <input onClick={(e) => handleFilterByActive(e)} type="radio" name="filters" id="active" />
+                    <label htmlFor="active"></label>
+                    <button id="btnActive">Active</button>
+                  </div>
+                  <div className={theme ? 'input_type' : 'input_type_light'}>
+                    <input onClick={() => handleFilterByCompleted()} type="radio" name="filters" id="completed" />
+                    <label htmlFor="completed"></label>
+                    <button id="btnCompleted">Completed</button>
+                  </div>
+                </div>
 
           </div>
 
