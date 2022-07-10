@@ -203,6 +203,7 @@ function App() {
   }
   return (
     <div className="App">
+      <div className={theme ? 'body' : 'body_light'}>
       <div className={theme ? 'container' : 'container_light'}>
         <div className={theme ? 'header_background' : 'header_background_light'}>
         </div>
@@ -312,15 +313,18 @@ function App() {
 
           </div>
 
-          <span>Drag and drop to rearder list</span>
+          <span className='drag_drop'>Drag and drop to rearder list</span>
         </div>
       </div>
+      </div>
 
-      <div className="attribution">
+      <div className={theme ? 'attribution_light' : 'attribution'}>
+        <div>
         Challenge by <b>
           <a href="https://www.frontendmentor.io/profile/Vbanety" target="_blank">Frontend Mentor</a></b>.
-        Coded by <b>
-          <a href="https://current-portfolio-delta.vercel.app/" target="_blank">Vinicius Batista</a></b>.
+        </div>
+        <div>Coded by <b>
+          <a href="https://current-portfolio-delta.vercel.app/" target="_blank">Vinicius Batista</a></b>.</div>
       </div>
     </div>
   )
