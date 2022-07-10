@@ -106,9 +106,20 @@ function App() {
   }
 
   const handleClearAllList = () => {
-    localStorage.removeItem("data")
-    localStorage.removeItem("obj")
-    setTodos([])
+    let getData = localStorage.getItem("data")
+
+    let parseData = JSON.parse(getData)
+
+    let cleaned = parseData.filter(e => e.status == false)
+
+    localStorage.setItem('data', JSON.stringify(cleaned))
+
+    let getDataCleaned = localStorage.getItem('data')
+
+    let parseDataCleaned = JSON.parse(getDataCleaned)
+
+    setTodos(parseDataCleaned)
+    
     setCountInput(todos.filter(e => e.status == 'x').length)
   }
 
