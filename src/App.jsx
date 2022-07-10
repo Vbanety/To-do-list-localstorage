@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import './App.css'
 
@@ -10,15 +10,12 @@ function App() {
   const [classFirsElement, setClassFirsElement] = useState(false)
   const [todos, setTodos] = useState([])
   const [countInput, setCountInput] = useState([])
+  const dragItem = useRef()
+  const dragOverItem = useRef()
 
   const handleTheme = () => { setTheme(!theme) }
 
-  useEffect(() => {
-    let focus = document.getElementById('setText')
-    focus.focus()
-
-    
-  }, [])
+  useEffect(() => { let focus = document.getElementById('setText').focus() }, [])
 
   const handleKeyPress = (e) => {
 
@@ -28,7 +25,6 @@ function App() {
 
       // INSERT DYNAMIC ID BY UUID GENERATOR LIB
       var str = uuidv4()
-
       var idStr = str.substring(0, 4)
       let text = "key"
       let keys = text.concat(idStr)
@@ -55,8 +51,7 @@ function App() {
       setTodos(parseData)
 
       setInputValue(e.currentTarget.value = '')
-      let elementEmpty = document.getElementById('fistReload')
-      // elementEmpty.style.display = 'none'
+      
       setClassFirsElement(!false)
 
     }
@@ -67,20 +62,16 @@ function App() {
     let array = localStorage.getItem("data");
     let parseArray = JSON.parse(array)
     let getItem = parseArray.findIndex(item => item.id == id)
-
     parseArray.splice(getItem, 1)
 
     // UPDATE QUANTITY OF INDEX INSIDE ARRAY ON LOCALSTORAGE AND NORMAL ARRAY 
     localStorage.setItem("data", JSON.stringify(parseArray));
     setTodos(parseArray)
-
   }
 
   const handleSublimeText = (e) => {
     let statusI = e.target.checked
-
     let idUpdate = e.target.id
-
     let checked = document.getElementById(`${idUpdate}`)
     var pElement = checked.parentElement.children[2]
     statusI == true ? pElement.classList.add('sub_line') : pElement.classList.remove('sub_line')
@@ -102,24 +93,18 @@ function App() {
     let xx = JSON.parse(dd)
 
     setTodos(xx)
+
     setCountInput(todos.filter(e => e.status == false).length)
   }
 
   const handleClearAllList = () => {
     let getData = localStorage.getItem("data")
-
     let parseData = JSON.parse(getData)
-
     let cleaned = parseData.filter(e => e.status == false)
-
     localStorage.setItem('data', JSON.stringify(cleaned))
-
     let getDataCleaned = localStorage.getItem('data')
-
     let parseDataCleaned = JSON.parse(getDataCleaned)
-
     setTodos(parseDataCleaned)
-    
     setCountInput(todos.filter(e => e.status == 'x').length)
   }
 
@@ -199,6 +184,23 @@ function App() {
     }
   }
 
+  const dragStart = (e, position) => {
+    dragItem.current = position;
+  }
+
+  const dragEnter = (e, position) => {
+    dragOverItem.current = position;
+  }
+
+  const drop = (e) => {
+    const copyListItems = [...todos];
+    const dragItemContent = copyListItems[dragItem.current];
+    copyListItems.splice(dragItem.current, 1);
+    copyListItems.splice(dragOverItem.current, 0, dragItemContent);
+    dragItem.current = null;
+    dragOverItem.current = null;
+    setTodos(copyListItems);
+  }
   return (
     <div className="App">
       <div className={theme ? 'container' : 'container_light'}>
@@ -230,10 +232,16 @@ function App() {
                     <p>Empty list</p>
                   </li>
                   :
-                  todos.map((item) => {
+                  todos.map((item, index) => {
                     return (
                       <>
-                        <li key={item.key}>
+                        <li 
+                          key={item.key}
+                          onDragStart={(e) => dragStart(e, index)}
+                          onDragEnter={(e) => dragEnter(e, index)}
+                          onDragEnd={drop}
+                          draggable
+                        >
                           <input
                             id={item.key} type="checkbox"
                             value={item.id} onClick={(e) => handleSublimeText(e)}
