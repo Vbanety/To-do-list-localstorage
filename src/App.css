@@ -527,7 +527,7 @@ ul::-webkit-scrollbar-thumb {
 
   .todo_content {
     margin: 2rem auto;
-    max-width: 60%;
+    /* max-width: 60%; */
     width: 100%;
   }
 
@@ -541,6 +541,6 @@ ul::-webkit-scrollbar-thumb {
 @media (max-width: 320px) {
   .main,
   .main_light {
-    /* width: 100%; */
+    width: 100%;
   }
 }
