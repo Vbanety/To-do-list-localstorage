@@ -110,7 +110,7 @@ function App() {
 
   const handleFilterByActive = (e) => {
 
-    if(todos.length !== 0 && todos !== []) {
+    if(todos.length !== 0) {
 
       var active = document.getElementById('active').checked
   
@@ -135,7 +135,7 @@ function App() {
   }
 
   const handleFilterByCompleted = () => {
-    if(todos.length !== 0 && todos !== []) {
+    if(todos.length !== 0) {
 
       var completed = document.getElementById('completed').checked
   
@@ -161,7 +161,7 @@ function App() {
 
   const handleAllTask = () => {
 
-    if(todos.length !== 0 && todos !== []) {
+    if(todos.length !== 0) {
       var all = document.getElementById('all').checked
 
     let data = localStorage.getItem('data')

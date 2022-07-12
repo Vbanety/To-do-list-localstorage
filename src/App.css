@@ -541,6 +541,6 @@ ul::-webkit-scrollbar-thumb {
 @media (max-width: 320px) {
   .main,
   .main_light {
-    width: 100%;
+    /* width: 100%; */
   }
 }
